@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using GitHubReposWebApplication.Extensions;
@@ -12,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace GitHubReposWebApplication
 {
@@ -19,6 +21,8 @@ namespace GitHubReposWebApplication
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(String.Concat(Directory.GetCurrentDirectory(), "/nlog.config"));
+
             Configuration = configuration;
         }
 
@@ -29,6 +33,8 @@ namespace GitHubReposWebApplication
         {
             services.ConfigureCors();
             services.ConfigureIISIntegration();
+
+            services.ConfigureLoggerService();
 
             services.AddControllers();
         }
