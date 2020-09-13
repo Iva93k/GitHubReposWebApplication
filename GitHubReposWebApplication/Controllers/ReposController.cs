@@ -22,7 +22,7 @@ namespace GitHubReposWebApplication.Controllers
             _logger = logger;
         }
 
-        [HttpGet("[action]")]
+        [HttpGet]
         public async Task<IActionResult> GetRepository()
         {
             using (var client = new HttpClient())
