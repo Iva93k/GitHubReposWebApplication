@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+
 
 namespace GitHubReposWebApplication.Controllers
 {
@@ -58,6 +61,17 @@ namespace GitHubReposWebApplication.Controllers
                     return BadRequest($"Error getting repository from GitHub: {httpRequestException.Message}");
                 }
             }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateRepository(ReposResponse reposRespose)
+        { 
+            string json = JsonConvert.SerializeObject(reposRespose);
+
+            //write string to file
+            System.IO.File.WriteAllText(@"json.txt", json);
+
+            return Ok();
         }
     }
 }
